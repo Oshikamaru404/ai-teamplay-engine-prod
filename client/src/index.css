@@ -3,6 +3,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Polices chargées via Google Fonts CDN dans index.html */
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -40,77 +42,100 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  /* Custom cognitive colors */
+  --color-cognitive-success: var(--cognitive-success);
+  --color-cognitive-warning: var(--cognitive-warning);
+  --color-cognitive-danger: var(--cognitive-danger);
+  --color-cognitive-info: var(--cognitive-info);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
+  /* Clean indigo/blue theme - LIGHT MODE */
+  --primary: oklch(0.55 0.22 260);
+  --primary-foreground: oklch(0.99 0 0);
+  --sidebar-primary: oklch(0.55 0.22 260);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  
+  /* Cognitive indicator colors */
+  --cognitive-success: oklch(0.6 0.18 150);
+  --cognitive-warning: oklch(0.7 0.18 75);
+  --cognitive-danger: oklch(0.6 0.22 25);
+  --cognitive-info: oklch(0.55 0.18 240);
+  
+  /* Chart colors - professional gradient */
+  --chart-1: oklch(0.55 0.22 260);
+  --chart-2: oklch(0.6 0.18 200);
+  --chart-3: oklch(0.6 0.18 150);
+  --chart-4: oklch(0.7 0.18 75);
+  --chart-5: oklch(0.55 0.15 320);
+  
+  --radius: 0.5rem;
+  --background: oklch(0.99 0.002 260);
+  --foreground: oklch(0.2 0.02 260);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
+  --card-foreground: oklch(0.2 0.02 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  --popover-foreground: oklch(0.2 0.02 260);
+  --secondary: oklch(0.97 0.005 260);
+  --secondary-foreground: oklch(0.35 0.02 260);
+  --muted: oklch(0.96 0.005 260);
+  --muted-foreground: oklch(0.5 0.02 260);
+  --accent: oklch(0.96 0.01 260);
+  --accent-foreground: oklch(0.2 0.02 260);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.92 0.005 260);
+  --input: oklch(0.92 0.005 260);
+  --ring: oklch(0.55 0.22 260);
+  --sidebar: oklch(0.99 0.002 260);
+  --sidebar-foreground: oklch(0.2 0.02 260);
+  --sidebar-accent: oklch(0.96 0.01 260);
+  --sidebar-accent-foreground: oklch(0.2 0.02 260);
+  --sidebar-border: oklch(0.92 0.005 260);
+  --sidebar-ring: oklch(0.55 0.22 260);
 }
 
 .dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  --primary: oklch(0.7 0.18 260);
+  --primary-foreground: oklch(0.12 0.02 260);
+  --sidebar-primary: oklch(0.7 0.18 260);
+  --sidebar-primary-foreground: oklch(0.12 0.02 260);
+  
+  --cognitive-success: oklch(0.7 0.2 150);
+  --cognitive-warning: oklch(0.75 0.2 75);
+  --cognitive-danger: oklch(0.65 0.24 25);
+  --cognitive-info: oklch(0.65 0.2 240);
+  
+  --chart-1: oklch(0.7 0.18 260);
+  --chart-2: oklch(0.65 0.18 200);
+  --chart-3: oklch(0.65 0.18 150);
+  --chart-4: oklch(0.75 0.18 75);
+  --chart-5: oklch(0.6 0.15 320);
+  
+  --background: oklch(0.13 0.015 260);
+  --foreground: oklch(0.95 0.01 260);
+  --card: oklch(0.17 0.015 260);
+  --card-foreground: oklch(0.95 0.01 260);
+  --popover: oklch(0.17 0.015 260);
+  --popover-foreground: oklch(0.95 0.01 260);
+  --secondary: oklch(0.22 0.015 260);
+  --secondary-foreground: oklch(0.9 0.01 260);
+  --muted: oklch(0.22 0.015 260);
+  --muted-foreground: oklch(0.65 0.015 260);
+  --accent: oklch(0.25 0.02 260);
+  --accent-foreground: oklch(0.95 0.01 260);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.28 0.015 260);
+  --input: oklch(0.28 0.015 260);
+  --ring: oklch(0.7 0.18 260);
+  --sidebar: oklch(0.15 0.015 260);
+  --sidebar-foreground: oklch(0.95 0.01 260);
+  --sidebar-accent: oklch(0.22 0.02 260);
+  --sidebar-accent-foreground: oklch(0.95 0.01 260);
+  --sidebar-border: oklch(0.28 0.015 260);
+  --sidebar-ring: oklch(0.7 0.18 260);
 }
 
 @layer base {
@@ -118,40 +143,49 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
-  [type="button"]:not(:disabled),
-  [type="submit"]:not(:disabled),
-  [type="reset"]:not(:disabled),
   a[href],
   select:not(:disabled),
   input[type="checkbox"]:not(:disabled),
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
   }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: oklch(0.8 0.01 260);
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.7 0.01 260);
+  }
 }
 
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 
@@ -162,16 +196,317 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1400px;
     }
   }
+  
+  /* Cognitive metric cards */
+  .cognitive-card {
+    @apply rounded-xl border bg-card p-5 shadow-sm transition-all hover:shadow-md hover:border-primary/20;
+  }
+  
+  .cognitive-metric {
+    @apply text-3xl font-semibold tracking-tight;
+  }
+  
+  .cognitive-label {
+    @apply text-sm text-muted-foreground font-medium;
+  }
+  
+  /* Bias alert styling */
+  .bias-alert {
+    @apply rounded-lg border-l-4 p-4 mb-3 bg-card;
+  }
+  
+  .bias-alert-low {
+    @apply border-l-cognitive-info bg-cognitive-info/5;
+  }
+  
+  .bias-alert-medium {
+    @apply border-l-cognitive-warning bg-cognitive-warning/5;
+  }
+  
+  .bias-alert-high {
+    @apply border-l-cognitive-danger bg-cognitive-danger/5;
+  }
+  
+  /* Chat message styling */
+  .chat-message {
+    @apply rounded-2xl px-4 py-2.5 max-w-[80%];
+  }
+  
+  .chat-message-user {
+    @apply bg-primary text-primary-foreground ml-auto rounded-br-sm;
+  }
+  
+  .chat-message-other {
+    @apply bg-muted text-foreground mr-auto rounded-bl-sm;
+  }
+  
+  .chat-message-system {
+    @apply bg-cognitive-info/10 text-cognitive-info border border-cognitive-info/20 mx-auto text-center text-sm rounded-lg;
+  }
+  
+  .chat-message-ping {
+    @apply bg-cognitive-warning/10 text-cognitive-warning border border-cognitive-warning/20 mx-auto rounded-lg;
+  }
+  
+  /* Timeline styling */
+  .timeline-item {
+    @apply relative pl-8 pb-6 border-l-2 border-border last:border-l-0 last:pb-0;
+  }
+  
+  .timeline-dot {
+    @apply absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-primary border-4 border-background;
+  }
+  
+  /* Audio recorder styling */
+  .audio-recorder {
+    @apply flex items-center gap-3 p-4 rounded-xl bg-muted/50 border border-border;
+  }
+  
+  .recording-indicator {
+    @apply w-3 h-3 rounded-full bg-destructive animate-pulse;
+  }
+  
+  /* Document upload zone */
+  .upload-zone {
+    @apply border-2 border-dashed border-border rounded-xl p-8 text-center transition-all cursor-pointer hover:border-primary/50 hover:bg-primary/5;
+  }
+  
+  .upload-zone-active {
+    @apply border-primary bg-primary/10;
+  }
+  
+  /* Analysis indicator */
+  .analysis-indicator {
+    @apply inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .analysis-positive {
+    @apply bg-cognitive-success/10 text-cognitive-success;
+  }
+  
+  .analysis-warning {
+    @apply bg-cognitive-warning/10 text-cognitive-warning;
+  }
+  
+  .analysis-danger {
+    @apply bg-cognitive-danger/10 text-cognitive-danger;
+  }
+  
+  .analysis-info {
+    @apply bg-cognitive-info/10 text-cognitive-info;
+  }
+  
+  /* Pulse animation for live indicators */
+  .pulse-live {
+    animation: pulse-live 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse-live {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  /* Gradient text for branding */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent;
+  }
+  
+  /* Glass effect */
+  .glass {
+    @apply bg-white/80 backdrop-blur-sm border border-border/50;
+  }
+  
+  /* Stat card */
+  .stat-card {
+    @apply bg-card rounded-xl border p-4 transition-all hover:shadow-sm;
+  }
+  
+  /* Score indicator */
+  .score-excellent { color: oklch(0.55 0.18 150); }
+  .score-good { color: oklch(0.6 0.15 170); }
+  .score-moderate { color: oklch(0.7 0.18 75); }
+  .score-poor { color: oklch(0.6 0.22 25); }
+}
+
+/* ==================== SMART PINGS STYLES ==================== */
+
+/* Smart Ping Card - Floating alerts */
+.smart-ping-card {
+  @apply p-4 rounded-xl shadow-lg border bg-white;
+  animation: slide-in 0.3s ease-out;
+}
+
+.smart-ping-card.bg-purple-100 { border-left-color: oklch(0.55 0.22 300); }
+.smart-ping-card.bg-red-100 { border-left-color: oklch(0.55 0.22 25); }
+.smart-ping-card.bg-amber-100 { border-left-color: oklch(0.7 0.18 75); }
+.smart-ping-card.bg-blue-100 { border-left-color: oklch(0.55 0.22 240); }
+.smart-ping-card.bg-pink-100 { border-left-color: oklch(0.6 0.22 350); }
+.smart-ping-card.bg-emerald-100 { border-left-color: oklch(0.55 0.18 160); }
+.smart-ping-card.bg-indigo-100 { border-left-color: oklch(0.55 0.22 280); }
+.smart-ping-card.bg-teal-100 { border-left-color: oklch(0.55 0.18 180); }
+
+/* Slide-in animation */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}
+
+/* Ping type specific colors */
+.ping-vision { @apply text-purple-600 bg-purple-100; }
+.ping-risk { @apply text-red-600 bg-red-100; }
+.ping-bias { @apply text-amber-600 bg-amber-100; }
+.ping-balance { @apply text-blue-600 bg-blue-100; }
+.ping-load { @apply text-pink-600 bg-pink-100; }
+.ping-memory { @apply text-emerald-600 bg-emerald-100; }
+.ping-antifragility { @apply text-indigo-600 bg-indigo-100; }
+.ping-spectral { @apply text-teal-600 bg-teal-100; }
+
+/* Chat message alert styling */
+.chat-message-alert {
+  @apply bg-amber-50 text-amber-900 border border-amber-200 mr-auto rounded-bl-sm;
+}
+
+.chat-message-ai {
+  @apply bg-blue-50 text-blue-900 border border-blue-200 mr-auto rounded-bl-sm;
+}
+
+/* Ping notification badge */
+.ping-badge {
+  @apply absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-medium;
+  animation: bounce-subtle 1s infinite;
+}
+
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Critical ping pulse effect */
+.ping-critical {
+  animation: ping-pulse 2s infinite;
+}
+
+@keyframes ping-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+  }
+}
+
+/* Warning ping glow */
+.ping-warning {
+  animation: ping-glow 2s infinite;
+}
+
+@keyframes ping-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+  }
+}
+
+/* Recording pulse animation */
+@keyframes recording-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+.recording-pulse {
+  animation: recording-pulse 1.5s ease-in-out infinite;
+}
+
+/* Attachment preview */
+.attachment-preview {
+  @apply flex items-center gap-2 px-3 py-1.5 bg-muted rounded-full border text-sm;
+}
+
+/* Audio waveform placeholder */
+.audio-waveform {
+  @apply flex items-center gap-0.5 h-8;
+}
+
+.audio-waveform-bar {
+  @apply w-1 bg-primary rounded-full;
+  animation: waveform 1s ease-in-out infinite;
+}
+
+.audio-waveform-bar:nth-child(1) { animation-delay: 0s; height: 40%; }
+.audio-waveform-bar:nth-child(2) { animation-delay: 0.1s; height: 70%; }
+.audio-waveform-bar:nth-child(3) { animation-delay: 0.2s; height: 50%; }
+.audio-waveform-bar:nth-child(4) { animation-delay: 0.3s; height: 80%; }
+.audio-waveform-bar:nth-child(5) { animation-delay: 0.4s; height: 60%; }
+
+@keyframes waveform {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.5);
+  }
+}
+
+/* Cognitive flow indicator */
+.flow-indicator {
+  @apply relative h-2 rounded-full bg-muted overflow-hidden;
+}
+
+.flow-indicator-fill {
+  @apply absolute inset-y-0 left-0 rounded-full transition-all duration-500;
+}
+
+.flow-optimal { @apply bg-gradient-to-r from-emerald-400 to-emerald-500; }
+.flow-low { @apply bg-gradient-to-r from-blue-400 to-blue-500; }
+.flow-high { @apply bg-gradient-to-r from-red-400 to-red-500; }
+
+/* Dark mode adjustments for pings */
+.dark .smart-ping-card {
+  @apply bg-gray-800 border-gray-700;
+}
+
+.dark .chat-message-alert {
+  @apply bg-amber-900/30 text-amber-200 border-amber-700;
+}
+
+.dark .chat-message-ai {
+  @apply bg-blue-900/30 text-blue-200 border-blue-700;
 }
