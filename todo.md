@@ -33,3 +33,8 @@
 - 15 fonctionnalités partielles 🟡
 - 36 fonctionnalités à développer ❌
 - Taux de complétion : ~46%
+
+## Bugs à corriger
+
+- [x] Page blanche dans l'aperçu Manus - résolu (conflit de ports)
+- [x] Vérifier la synchronisation avec le repository GitHub - Synchronisé

@@ -4,8 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getLoginUrl } from "@/const";
 import {
   Brain,
+  Users,
   Target,
+  Lightbulb,
   Shield,
+  TrendingUp,
   MessageSquare,
   Database,
   ArrowRight,
@@ -59,22 +62,22 @@ export default function Home() {
   ];
 
   const biasTypes = [
-    { name: "Confirmation Bias", color: "bg-blue-500" },
-    { name: "Groupthink", color: "bg-green-500" },
-    { name: "Sunk Cost Fallacy", color: "bg-orange-500" },
-    { name: "Overconfidence", color: "bg-red-500" },
-    { name: "Authority Bias", color: "bg-purple-500" },
+    { name: "Confirmation Bias", color: "bg-chart-1" },
+    { name: "Groupthink", color: "bg-chart-2" },
+    { name: "Sunk Cost Fallacy", color: "bg-chart-3" },
+    { name: "Overconfidence", color: "bg-chart-4" },
+    { name: "Authority Bias", color: "bg-chart-5" },
     { name: "Anchoring", color: "bg-primary" },
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b bg-background/80 backdrop-blur-lg">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <Brain className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">AI TeamPlay Engine</span>
+            <span className="text-xl font-bold gradient-text">AI TeamPlay Engine</span>
           </div>
           <div className="flex items-center gap-4">
             {loading ? (
@@ -96,9 +99,9 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-blue-500/5" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-chart-5/5" />
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-chart-3/10 rounded-full blur-3xl" />
         
         <div className="container relative">
           <div className="max-w-4xl mx-auto text-center">
@@ -109,7 +112,7 @@ export default function Home() {
             
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
               Le{" "}
-              <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">Cerveau Collectif</span>
+              <span className="gradient-text">Cerveau Collectif</span>
               <br />
               de Votre Équipe
             </h1>
@@ -214,7 +217,7 @@ export default function Home() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-orange-500 text-white flex items-center justify-center text-2xl font-bold mx-auto mb-6">
+              <div className="w-16 h-16 rounded-full bg-chart-3 text-white flex items-center justify-center text-2xl font-bold mx-auto mb-6">
                 2
               </div>
               <h3 className="text-xl font-semibold mb-3">Collaborez Normalement</h3>
@@ -224,7 +227,7 @@ export default function Home() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-purple-500 text-white flex items-center justify-center text-2xl font-bold mx-auto mb-6">
+              <div className="w-16 h-16 rounded-full bg-chart-5 text-white flex items-center justify-center text-2xl font-bold mx-auto mb-6">
                 3
               </div>
               <h3 className="text-xl font-semibold mb-3">Recevez des Insights</h3>
@@ -245,15 +248,15 @@ export default function Home() {
               <div className="text-muted-foreground">Types de Biais Détectés</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-orange-500 mb-2">Temps Réel</div>
+              <div className="text-4xl font-bold text-chart-3 mb-2">Temps Réel</div>
               <div className="text-muted-foreground">Analyse Continue</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-red-500 mb-2">100%</div>
+              <div className="text-4xl font-bold text-chart-4 mb-2">100%</div>
               <div className="text-muted-foreground">Confidentialité</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-purple-500 mb-2">IA</div>
+              <div className="text-4xl font-bold text-chart-5 mb-2">IA</div>
               <div className="text-muted-foreground">Recommandations Personnalisées</div>
             </div>
           </div>
@@ -261,7 +264,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/10 via-background to-blue-500/10">
+      <section className="py-20 bg-gradient-to-br from-primary/10 via-background to-chart-5/10">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6">
@@ -294,7 +297,7 @@ export default function Home() {
               <span className="font-semibold">AI TeamPlay Engine</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2026 AI TeamPlay Engine. Plateforme d'Intelligence Collective Augmentée.
+              © 2025 AI TeamPlay Engine. Plateforme d'Intelligence Collective Augmentée.
             </p>
           </div>
         </div>

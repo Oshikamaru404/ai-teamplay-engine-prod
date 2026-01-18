@@ -152,15 +152,18 @@ export const messages = mysqlTable("messages", {
     pingType?: string;
     severity?: string;
     analysisResult?: Record<string, unknown>;
+    // Audio-specific metadata
     audioId?: number;
     audioUrl?: string;
     duration?: number;
     transcription?: string;
     transcriptionStatus?: "pending" | "processing" | "completed" | "failed";
+    // Document-specific metadata
     documentId?: number;
     documentUrl?: string;
     documentName?: string;
     documentType?: string;
+    // CT-specific metadata
     ctTrigger?: number;
     ctValue?: number;
   }>(),
@@ -228,7 +231,7 @@ export const biasPatterns = mysqlTable("bias_patterns", {
 export type BiasPattern = typeof biasPatterns.$inferSelect;
 export type InsertBiasPattern = typeof biasPatterns.$inferInsert;
 
-// ==================== COGNITIVE MEMORIES ====================
+// ==================== COGNITIVE MEMORIES (Vector-like storage) ====================
 export const cognitiveMemories = mysqlTable("cognitive_memories", {
   id: int("id").autoincrement().primaryKey(),
   projectId: int("projectId"),
@@ -290,7 +293,7 @@ export const documents = mysqlTable("documents", {
 export type Document = typeof documents.$inferSelect;
 export type InsertDocument = typeof documents.$inferInsert;
 
-// ==================== COGNITIVE METRICS ====================
+// ==================== COGNITIVE METRICS (Time series) ====================
 export const cognitiveMetrics = mysqlTable("cognitive_metrics", {
   id: int("id").autoincrement().primaryKey(),
   projectId: int("projectId").notNull(),
@@ -333,7 +336,7 @@ export const audioRecordings = mysqlTable("audio_recordings", {
   userId: int("userId").notNull(),
   fileUrl: text("fileUrl").notNull(),
   fileKey: varchar("fileKey", { length: 500 }).notNull(),
-  duration: int("duration"),
+  duration: int("duration"), // in seconds
   transcription: text("transcription"),
   transcriptionStatus: mysqlEnum("transcriptionStatus", ["pending", "processing", "completed", "failed"]).default("pending").notNull(),
   analysis: json("analysis").$type<{
@@ -363,7 +366,7 @@ export const realtimeAnalysis = mysqlTable("realtime_analysis", {
     details: Record<string, unknown>;
     triggeredPings: string[];
   }>().notNull(),
-  processingTime: int("processingTime"),
+  processingTime: int("processingTime"), // in ms
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
