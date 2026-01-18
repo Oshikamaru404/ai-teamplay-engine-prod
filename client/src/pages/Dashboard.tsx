@@ -43,6 +43,7 @@ import {
 } from "lucide-react";
 import { CSSProperties, useState } from "react";
 import { useLocation } from "wouter";
+import CognitiveMap, { DEMO_COGNITIVE_MAP } from "@/components/CognitiveMap";
 import {
   LineChart,
   Line,
@@ -430,6 +431,26 @@ export default function Dashboard() {
                 <Button variant="outline" className="w-full mt-2">
                   Voir toutes les alertes
                 </Button>
+              </CardContent>
+            </Card>
+
+            {/* Cognitive Map */}
+            <Card className="lg:col-span-2">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Brain className="h-5 w-5 text-primary" />
+                  Carte Cognitive Interactive
+                </CardTitle>
+                <CardDescription>
+                  Visualisez les relations entre membres, idées, décisions et biais
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-0">
+                <CognitiveMap 
+                  data={DEMO_COGNITIVE_MAP}
+                  onNodeClick={(node) => console.log('Node clicked:', node)}
+                  className="border-0 shadow-none"
+                />
               </CardContent>
             </Card>
 

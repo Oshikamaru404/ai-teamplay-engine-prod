@@ -33,12 +33,12 @@
 - [ ] Améliorer la règle de déclenchement avec cycles de propagation
 
 ### 3.2 Analyse Audio Avancée
-- [ ] Implémenter speaker diarization (identification des intervenants)
+- [x] Implémenter speaker diarization (identification des intervenants)
 - [ ] Ajouter analyse du rythme de parole
 - [ ] Détection de dominance vocale
 
 ### 3.3 Dashboard Amélioré
-- [ ] Créer carte cognitive dynamique (graphe interactif)
+- [x] Créer carte cognitive dynamique (graphe interactif)
 - [ ] Améliorer visualisation des biais actifs
 - [ ] Ajouter historique détaillé des dérives corrigées
 
@@ -52,9 +52,9 @@
 ## Phase 4 : Améliorations Moyenne Priorité (Qualité)
 
 ### 4.1 Fenêtres Cognitives Glissantes (CSAW)
-- [ ] Implémenter pondération récente > ancien
-- [ ] Ajouter seuils adaptatifs selon maturité équipe
-- [ ] Améliorer analyse temporelle continue
+- [x] Implémenter pondération récente > ancien
+- [x] Ajouter seuils adaptatifs selon maturité équipe
+- [x] Améliorer analyse temporelle continue
 
 ### 4.2 Mémoire Collective Avancée
 - [ ] Implémenter indexation vectorielle des raisonnements
@@ -113,7 +113,8 @@
 - [x] Problème d'authentification OAuth - résolu (fonctionnait déjà)
 
 ## Statistiques Actuelles
-- **Fonctionnalités implémentées** : 44 ✅
-- **Fonctionnalités partielles** : 15 🟡
-- **Fonctionnalités à développer** : 36 ❌
-- **Taux de complétion** : ~46% complet, ~16% partiel, ~38% à développer
+- **Fonctionnalités implémentées** : 53 ✅ (+9 nouvelles)
+- **Fonctionnalités partielles** : 12 🟡
+- **Fonctionnalités à développer** : 30 ❌
+- **Taux de complétion** : ~56% complet, ~13% partiel, ~31% à développer
+- **Tests unitaires** : 53 tests passent ✅
