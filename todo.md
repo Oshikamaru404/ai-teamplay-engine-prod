@@ -187,3 +187,17 @@
 - [x] Implémenter CRUD complet pour les profils (routes API profile360 complètes)
 - [x] Permettre la modification du profil Big Five (refaire le quiz)
 - [x] Permettre la mise à jour de l'expérience professionnelle (import CV)
+
+## Phase 8 : Onboarding et Multilingue
+
+### 8.1 Onboarding Quiz Big Five
+- [x] Créer page Onboarding avec quiz Big Five (15 questions)
+- [x] Intégrer avec submitQuiz API
+- [x] Ajouter option Skip pour passer l'onboarding
+- [x] 3 étapes : Quiz, Expérience, Vérification
+
+### 8.2 Support Multilingue (FR/EN)
+- [x] Créer système de traduction i18n (FR/EN)
+- [x] Traduire tous les textes clés (nav, dashboard, profile, onboarding)
+- [x] Ajouter LanguageContext pour gestion globale
+- [x] Intégrer useTranslation hook dans les composants

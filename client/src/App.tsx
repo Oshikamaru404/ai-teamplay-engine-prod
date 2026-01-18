@@ -4,6 +4,7 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { LanguageContext } from "./lib/i18n";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import ProjectView from "./pages/ProjectView";
@@ -11,7 +12,10 @@ import MemoryExplorer from "./pages/MemoryExplorer";
 import Teams from "./pages/Teams";
 import Profile from "./pages/Profile";
 import Profile360 from "./pages/Profile360";
+import Onboarding from "./pages/Onboarding";
 import Invite from "./pages/Invite";
+import { useState } from "react";
+import type { Language } from "./lib/i18n";
 
 function Router() {
   return (
@@ -23,6 +27,7 @@ function Router() {
       <Route path="/teams" component={Teams} />
       <Route path="/profile" component={Profile} />
       <Route path="/profile360" component={Profile360} />
+      <Route path="/onboarding" component={Onboarding} />
       <Route path="/invite/:inviteCode" component={Invite} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
@@ -31,14 +36,18 @@ function Router() {
 }
 
 function App() {
+  const [language, setLanguage] = useState<Language>('fr');
+
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="light">
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
+      <LanguageContext.Provider value={{ language, setLanguage }}>
+        <ThemeProvider defaultTheme="light">
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </ThemeProvider>
+      </LanguageContext.Provider>
     </ErrorBoundary>
   );
 }
