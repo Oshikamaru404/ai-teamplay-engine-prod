@@ -78,6 +78,17 @@ async function checkAndTriggerCTPings(
   const project = await db.getProjectById(projectId);
   if (!project) return;
 
+  // Vérification CAT : au moins 3 membres doivent avoir participé
+  const recentMessages = await db.getMessagesByProjectId(projectId, 50);
+  const uniqueUserIds = new Set(recentMessages.filter(m => m.message.userId).map(m => m.message.userId));
+  const participantCount = uniqueUserIds.size;
+  
+  // Ne pas déclencher de pings si moins de 3 membres impliqés
+  if (participantCount < 3) {
+    console.log(`[CAT] Ping bloqué : seulement ${participantCount} membre(s) impliqué(s), minimum 3 requis`);
+    return;
+  }
+
   const lastPingCT = (project as any).lastPingCT || 0;
   const triggeredPings: string[] = [];
 

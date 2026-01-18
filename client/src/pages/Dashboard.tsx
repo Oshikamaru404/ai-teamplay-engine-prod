@@ -237,7 +237,7 @@ export default function Dashboard() {
         <main className="flex-1 p-6 space-y-6">
           {/* Quick Stats */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card className="cognitive-card">
+            <Card className="cognitive-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   Indice de Diversité
@@ -251,7 +251,7 @@ export default function Dashboard() {
               </CardContent>
             </Card>
 
-            <Card className="cognitive-card">
+            <Card className="cognitive-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   Pensée Critique
@@ -265,7 +265,7 @@ export default function Dashboard() {
               </CardContent>
             </Card>
 
-            <Card className="cognitive-card">
+            <Card className="cognitive-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   Risque de Biais
@@ -279,7 +279,7 @@ export default function Dashboard() {
               </CardContent>
             </Card>
 
-            <Card className="cognitive-card">
+            <Card className="cognitive-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   Qualité Décisionnelle
@@ -390,7 +390,7 @@ export default function Dashboard() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {recentAlerts.map((alert) => (
+                {recentAlerts.map((alert, index) => (
                   <div
                     key={alert.id}
                     className={`bias-alert ${
@@ -399,22 +399,31 @@ export default function Dashboard() {
                         : alert.severity === "medium"
                         ? "bias-alert-medium"
                         : "bias-alert-low"
-                    }`}
+                    } animate-in fade-in slide-in-from-left duration-300`}
+                    style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className="flex items-start justify-between">
-                      <div>
+                    <div className="flex items-start gap-3">
+                      <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                        alert.severity === "high"
+                          ? "bg-red-500/10"
+                          : alert.severity === "medium"
+                          ? "bg-orange-500/10"
+                          : "bg-blue-500/10"
+                      }`}>
+                        <AlertTriangle
+                          className={`h-4 w-4 ${
+                            alert.severity === "high"
+                              ? "text-cognitive-danger"
+                              : alert.severity === "medium"
+                              ? "text-cognitive-warning"
+                              : "text-cognitive-info"
+                          }`}
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm">{alert.title}</p>
                         <p className="text-xs text-muted-foreground mt-1">{alert.time}</p>
                       </div>
-                      <AlertTriangle
-                        className={`h-4 w-4 ${
-                          alert.severity === "high"
-                            ? "text-cognitive-danger"
-                            : alert.severity === "medium"
-                            ? "text-cognitive-warning"
-                            : "text-cognitive-info"
-                        }`}
-                      />
                     </div>
                   </div>
                 ))}

@@ -37,7 +37,8 @@ export type SmartPingType =
   | "load"        // Surcharge mentale
   | "memory"      // Erreur récurrente
   | "antifragility" // Harmonie excessive
-  | "spectral";   // Rythme cognitif collectif
+  | "spectral"    // Rythme cognitif collectif
+  | "silence";     // Expertise non exploitée
 
 export interface SmartPing {
   type: SmartPingType;
@@ -391,6 +392,7 @@ const PING_CONFIGS: Record<SmartPingType, { title: string; icon: string; color: 
   memory: { title: "Memory Ping", icon: "📚", color: "#10B981" },      // Emerald
   antifragility: { title: "Antifragility Ping", icon: "🛡️", color: "#6366F1" }, // Indigo
   spectral: { title: "Spectral Ping", icon: "📊", color: "#14B8A6" },  // Teal
+  silence: { title: "Silence Ping", icon: "🤫", color: "#F97316" },    // Orange
 };
 
 export function evaluatePingTriggers(
@@ -565,6 +567,26 @@ export function evaluatePingTriggers(
       severity: "info",
       suggestions: flowSuggestions[teamMetrics.flowState] || [],
       stats: { label: "État de flow", value: teamMetrics.flowState === "low_frequency" ? "Basse fréquence" : "Haute fréquence" }
+    });
+  }
+  
+  // ========== SILENCE PING - Expertise non exploitée ==========
+  // Déclenchement : membre expert silencieux, déséquilibre de participation
+  if (teamMetrics && teamMetrics.participationBalance < 0.3 && psychological.engagement < 0.4) {
+    pings.push({
+      type: "silence",
+      title: config.silence.title,
+      icon: config.silence.icon,
+      color: config.silence.color,
+      message: "Expertise potentiellement non exploitée. Des membres qualifiés semblent en retrait.",
+      severity: "warning",
+      suggestions: [
+        "Solliciter directement les membres silencieux",
+        "Créer un espace de contribution écrite",
+        "Utiliser un tour de table structuré",
+        "Vérifier les barrières à la participation"
+      ],
+      stats: { label: "Équilibre participation", value: `${Math.round(teamMetrics.participationBalance * 100)}%` }
     });
   }
   
