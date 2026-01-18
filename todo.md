@@ -179,3 +179,11 @@
 - **Tests unitaires** : 104 tests passent ✅
 - **Taux de complétion** : ~82% complet
 - **Nouveaux modules** : bigFiveProfile, professionalProfile, smartBiasSystem (intégration Big Five)
+
+## Bugs à corriger - Profil 360°
+
+- [x] Page Profile360 non accessible depuis la navigation - CORRIGÉ
+- [x] Ajouter lien vers Profile360 dans le menu/sidebar (Dashboard, Teams, Memory, Profile)
+- [x] Implémenter CRUD complet pour les profils (routes API profile360 complètes)
+- [x] Permettre la modification du profil Big Five (refaire le quiz)
+- [x] Permettre la mise à jour de l'expérience professionnelle (import CV)

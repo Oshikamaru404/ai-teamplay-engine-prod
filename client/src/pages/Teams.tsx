@@ -48,6 +48,7 @@ import {
   Trash2,
   Settings,
   User,
+  UserCircle,
   ArrowLeft,
   UserPlus,
   Copy,
@@ -63,6 +64,7 @@ const menuItems = [
   { icon: Users, label: "Équipes", path: "/teams" },
   { icon: Search, label: "Memory Explorer", path: "/memory" },
   { icon: User, label: "Profil", path: "/profile" },
+  { icon: UserCircle, label: "Profil 360°", path: "/profile360" },
 ];
 
 export default function Teams() {
