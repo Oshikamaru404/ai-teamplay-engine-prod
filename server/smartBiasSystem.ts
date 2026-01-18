@@ -473,6 +473,143 @@ function calculateCognitiveHealthScore(biases: BiasIndicator[]): number {
 }
 
 // ============================================================================
+// INTÉGRATION PROFIL BIG FIVE - Calibration personnalisée
+// ============================================================================
+
+import type { BigFiveProfile } from "./bigFiveProfile";
+
+/**
+ * Ajuste les seuils de détection de biais selon le profil Big Five de l'utilisateur
+ * Cela permet une détection plus précise et moins de faux positifs
+ */
+export function adjustThresholdsForProfile(
+  baseThresholds: BiasThresholds,
+  profile: BigFiveProfile
+): BiasThresholds {
+  const adjusted = { ...baseThresholds };
+
+  // Haute conscienciosité = plus rigoureux, moins tolérant aux biais
+  if (profile.conscientiousness >= 70) {
+    adjusted.minConfidence = Math.max(0.3, adjusted.minConfidence - 0.1);
+    adjusted.maxAlertsPerSession = Math.min(5, adjusted.maxAlertsPerSession + 1);
+  }
+
+  // Haute ouverture = plus tolérant à l'exploration, moins d'alertes sur confirmation
+  if (profile.openness >= 70) {
+    adjusted.cooldownMinutes = Math.min(60, adjusted.cooldownMinutes + 10);
+  }
+
+  // Haute agréabilité = plus sensible au groupthink
+  if (profile.agreeableness >= 70) {
+    adjusted.minConfidence = Math.max(0.4, adjusted.minConfidence - 0.1);
+  }
+
+  // Haut névrosisme = moins d'alertes pour ne pas stresser
+  if (profile.neuroticism >= 70) {
+    adjusted.maxAlertsPerSession = Math.max(1, adjusted.maxAlertsPerSession - 1);
+    adjusted.minSeverity = "high";
+  }
+
+  return adjusted;
+}
+
+/**
+ * Détermine les biais auxquels un utilisateur est le plus susceptible
+ * selon son profil Big Five
+ */
+export function getProbableBiasesForProfile(profile: BigFiveProfile): BiasType[] {
+  const probableBiases: BiasType[] = [];
+
+  // Basse ouverture = plus susceptible au biais de confirmation
+  if (profile.openness < 40) {
+    probableBiases.push("confirmation");
+  }
+
+  // Haute agréabilité = plus susceptible au groupthink et biais d'autorité
+  if (profile.agreeableness >= 70) {
+    probableBiases.push("groupthink", "authority");
+  }
+
+  // Haute extraversion = plus susceptible à l'effet bandwagon
+  if (profile.extraversion >= 70) {
+    probableBiases.push("bandwagon");
+  }
+
+  // Basse conscienciosité = plus susceptible à l'excès de confiance
+  if (profile.conscientiousness < 40) {
+    probableBiases.push("overconfidence");
+  }
+
+  // Haut névrosisme = plus susceptible au sunk cost (peur de perdre)
+  if (profile.neuroticism >= 60) {
+    probableBiases.push("sunk_cost");
+  }
+
+  return probableBiases;
+}
+
+/**
+ * Génère des conseils personnalisés basés sur le profil Big Five
+ */
+export function getPersonalizedBiasAdvice(
+  biasType: BiasType,
+  profile: BigFiveProfile
+): string {
+  const vulgarized = VULGARIZED_BIASES[biasType];
+  const baseAdvice = vulgarized.actionableTip;
+
+  // Adapter le conseil selon le profil
+  const personalizations: Record<BiasType, (p: BigFiveProfile) => string> = {
+    confirmation: (p) => {
+      if (p.openness < 50) {
+        return `${baseAdvice} Votre profil suggère que vous pourriez bénéficier particulièrement de chercher activement des points de vue différents.`;
+      }
+      return baseAdvice;
+    },
+    groupthink: (p) => {
+      if (p.agreeableness >= 60) {
+        return `${baseAdvice} Votre nature collaborative est une force, mais n'hésitez pas à exprimer vos doutes - votre équipe appréciera votre honnêteté.`;
+      }
+      return baseAdvice;
+    },
+    sunk_cost: (p) => {
+      if (p.conscientiousness >= 60) {
+        return `${baseAdvice} Votre sens des responsabilités est admirable, mais parfois la meilleure décision est de pivoter.`;
+      }
+      return baseAdvice;
+    },
+    overconfidence: (p) => {
+      if (p.extraversion >= 60) {
+        return `${baseAdvice} Votre enthousiasme est contagieux ! Canalisez-le en préparant aussi un plan B.`;
+      }
+      return baseAdvice;
+    },
+    authority: (p) => {
+      if (p.agreeableness >= 60) {
+        return `${baseAdvice} Votre respect pour les autres est une qualité, mais vos idées ont autant de valeur.`;
+      }
+      return baseAdvice;
+    },
+    anchoring: () => baseAdvice,
+    halo_effect: () => baseAdvice,
+    availability: (p) => {
+      if (p.neuroticism >= 50) {
+        return `${baseAdvice} Prenez du recul : les événements récents ne reflètent pas toujours la réalité statistique.`;
+      }
+      return baseAdvice;
+    },
+    bandwagon: (p) => {
+      if (p.extraversion >= 60) {
+        return `${baseAdvice} Votre sociabilité est un atout, mais vérifiez que les tendances correspondent à vos besoins réels.`;
+      }
+      return baseAdvice;
+    },
+  };
+
+  return personalizations[biasType](profile);
+}
+
+// ============================================================================
 // EXPORT DES FONCTIONS UTILITAIRES
 // ============================================================================
 

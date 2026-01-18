@@ -110,6 +110,18 @@ export async function updateUserProfile(userId: number, data: Partial<InsertUser
   await db.update(users).set(data).where(eq(users.id, userId));
 }
 
+export async function updateUserBigFiveProfile(userId: number, bigFiveProfile: any) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(users).set({ bigFiveProfile }).where(eq(users.id, userId));
+}
+
+export async function updateUserProfessionalProfile(userId: number, professionalProfile: any) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(users).set({ professionalProfile }).where(eq(users.id, userId));
+}
+
 // ==================== TEAM QUERIES ====================
 export async function createTeam(team: InsertTeam) {
   const db = await getDb();

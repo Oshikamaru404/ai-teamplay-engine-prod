@@ -6,6 +6,9 @@ import {
   DEFAULT_THRESHOLDS,
   prioritizeBiases,
   groupSimilarBiases,
+  adjustThresholdsForProfile,
+  getProbableBiasesForProfile,
+  getPersonalizedBiasAdvice,
 } from "./smartBiasSystem";
 
 // Tests pour cognitiveTemplates
@@ -39,6 +42,86 @@ import {
 // ============================================================================
 
 describe("smartBiasSystem", () => {
+  describe("Big Five Integration", () => {
+    it("should adjust thresholds for high conscientiousness", () => {
+      const profile = {
+        openness: 50,
+        conscientiousness: 80,
+        extraversion: 50,
+        agreeableness: 50,
+        neuroticism: 30,
+        source: "quiz" as const,
+        confidence: 100,
+        lastUpdated: new Date().toISOString(),
+      };
+      const adjusted = adjustThresholdsForProfile(DEFAULT_THRESHOLDS, profile);
+      expect(adjusted.minConfidence).toBeLessThan(DEFAULT_THRESHOLDS.minConfidence);
+      expect(adjusted.maxAlertsPerSession).toBeGreaterThanOrEqual(DEFAULT_THRESHOLDS.maxAlertsPerSession);
+    });
+
+    it("should reduce alerts for high neuroticism", () => {
+      const profile = {
+        openness: 50,
+        conscientiousness: 50,
+        extraversion: 50,
+        agreeableness: 50,
+        neuroticism: 80,
+        source: "quiz" as const,
+        confidence: 100,
+        lastUpdated: new Date().toISOString(),
+      };
+      const adjusted = adjustThresholdsForProfile(DEFAULT_THRESHOLDS, profile);
+      expect(adjusted.maxAlertsPerSession).toBeLessThanOrEqual(DEFAULT_THRESHOLDS.maxAlertsPerSession);
+      expect(adjusted.minSeverity).toBe("high");
+    });
+
+    it("should identify probable biases for low openness", () => {
+      const profile = {
+        openness: 30,
+        conscientiousness: 50,
+        extraversion: 50,
+        agreeableness: 50,
+        neuroticism: 50,
+        source: "quiz" as const,
+        confidence: 100,
+        lastUpdated: new Date().toISOString(),
+      };
+      const biases = getProbableBiasesForProfile(profile);
+      expect(biases).toContain("confirmation");
+    });
+
+    it("should identify groupthink susceptibility for high agreeableness", () => {
+      const profile = {
+        openness: 50,
+        conscientiousness: 50,
+        extraversion: 50,
+        agreeableness: 80,
+        neuroticism: 50,
+        source: "quiz" as const,
+        confidence: 100,
+        lastUpdated: new Date().toISOString(),
+      };
+      const biases = getProbableBiasesForProfile(profile);
+      expect(biases).toContain("groupthink");
+      expect(biases).toContain("authority");
+    });
+
+    it("should provide personalized advice based on profile", () => {
+      const profile = {
+        openness: 30,
+        conscientiousness: 50,
+        extraversion: 50,
+        agreeableness: 50,
+        neuroticism: 50,
+        source: "quiz" as const,
+        confidence: 100,
+        lastUpdated: new Date().toISOString(),
+      };
+      const advice = getPersonalizedBiasAdvice("confirmation", profile);
+      expect(advice).toContain("points de vue diff\u00e9rents");
+    });
+  });
+
   describe("VULGARIZED_BIASES", () => {
     it("contient les infos vulgarisées pour confirmation", () => {
       const info = VULGARIZED_BIASES.confirmation;

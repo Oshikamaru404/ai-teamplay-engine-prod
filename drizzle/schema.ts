@@ -17,6 +17,32 @@ export const users = mysqlTable("users", {
     riskTolerance: string;
     collaborationPreference: string;
   }>(),
+  // Big Five / OCEAN personality profile
+  bigFiveProfile: json("bigFiveProfile").$type<{
+    openness: number;
+    conscientiousness: number;
+    extraversion: number;
+    agreeableness: number;
+    neuroticism: number;
+    source: 'quiz' | 'analysis' | 'combined';
+    confidence: number;
+    lastUpdated: string;
+  }>(),
+  // Professional profile from CV/LinkedIn
+  professionalProfile: json("professionalProfile").$type<{
+    linkedinUrl?: string;
+    currentRole?: string;
+    company?: string;
+    yearsExperience?: number;
+    industries: string[];
+    skills: string[];
+    education: Array<{ degree: string; field: string; institution: string; year?: number }>;
+    experiences: Array<{ title: string; company: string; duration: string; description?: string }>;
+    certifications: string[];
+    languages: string[];
+    source: 'linkedin' | 'cv' | 'manual';
+    lastUpdated: string;
+  }>(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),

@@ -10,6 +10,7 @@ import ProjectView from "./pages/ProjectView";
 import MemoryExplorer from "./pages/MemoryExplorer";
 import Teams from "./pages/Teams";
 import Profile from "./pages/Profile";
+import Profile360 from "./pages/Profile360";
 import Invite from "./pages/Invite";
 
 function Router() {
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/memory" component={MemoryExplorer} />
       <Route path="/teams" component={Teams} />
       <Route path="/profile" component={Profile} />
+      <Route path="/profile360" component={Profile360} />
       <Route path="/invite/:inviteCode" component={Invite} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

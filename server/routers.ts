@@ -27,6 +27,19 @@ import {
   CONTEXT_THRESHOLDS,
   type SmartBiasSummary,
 } from "./smartBiasSystem";
+import {
+  BIG_FIVE_QUIZ,
+  TRAIT_DESCRIPTIONS,
+  calculateQuizProfile,
+  getTeamRole,
+  type QuizAnswer,
+  type BigFiveProfile,
+} from "./bigFiveProfile";
+import {
+  extractFromCVText,
+  calculateProfileCompleteness,
+  type ProfessionalProfile,
+} from "./professionalProfile";
 
 // ==================== COGNITIVE TOKENS SYSTEM ====================
 
@@ -1583,6 +1596,179 @@ ${JSON.stringify(project?.cognitiveHealth, null, 2)}
         }
       }),
   }),
+
+  // ==================== PROFILE 360 ROUTES ====================
+  profile360: router({
+    // Get Big Five quiz questions
+    getQuiz: publicProcedure.query(() => {
+      return {
+        questions: BIG_FIVE_QUIZ,
+        traitDescriptions: TRAIT_DESCRIPTIONS,
+      };
+    }),
+
+    // Submit quiz answers and calculate profile
+    submitQuiz: protectedProcedure
+      .input(
+        z.object({
+          answers: z.array(
+            z.object({
+              questionId: z.string(),
+              score: z.number().min(1).max(5),
+            })
+          ),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        const profile = calculateQuizProfile(input.answers);
+        const teamRole = getTeamRole(profile);
+
+        // Update user's Big Five profile in database
+        await db.updateUserBigFiveProfile(ctx.user.id, profile);
+
+        return {
+          profile,
+          teamRole,
+          traitDescriptions: TRAIT_DESCRIPTIONS,
+        };
+      }),
+
+    // Get current user's Big Five profile
+    getBigFiveProfile: protectedProcedure.query(async ({ ctx }) => {
+      const user = await db.getUserById(ctx.user.id);
+      if (!user?.bigFiveProfile) {
+        return { hasProfile: false, profile: null, teamRole: null };
+      }
+      const profile = user.bigFiveProfile as BigFiveProfile;
+      return {
+        hasProfile: true,
+        profile,
+        teamRole: getTeamRole(profile),
+        traitDescriptions: TRAIT_DESCRIPTIONS,
+      };
+    }),
+
+    // Extract professional profile from CV text
+    extractFromCV: protectedProcedure
+      .input(z.object({ cvText: z.string().min(50) }))
+      .mutation(async ({ ctx, input }) => {
+        const result = await extractFromCVText(input.cvText);
+        if (result.success && result.profile) {
+          await db.updateUserProfessionalProfile(ctx.user.id, result.profile);
+        }
+        return result;
+      }),
+
+    // Get current user's professional profile
+    getProfessionalProfile: protectedProcedure.query(async ({ ctx }) => {
+      const user = await db.getUserById(ctx.user.id);
+      const profile = user?.professionalProfile as ProfessionalProfile | null;
+      return {
+        hasProfile: !!profile,
+        profile,
+        completeness: calculateProfileCompleteness(profile),
+      };
+    }),
+
+    // Update professional profile manually
+    updateProfessionalProfile: protectedProcedure
+      .input(
+        z.object({
+          currentRole: z.string().optional(),
+          company: z.string().optional(),
+          yearsExperience: z.number().optional(),
+          industries: z.array(z.string()).optional(),
+          skills: z.array(z.string()).optional(),
+          languages: z.array(z.string()).optional(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        const user = await db.getUserById(ctx.user.id);
+        const existingProfile = (user?.professionalProfile as ProfessionalProfile) || {
+          industries: [],
+          skills: [],
+          education: [],
+          experiences: [],
+          certifications: [],
+          languages: [],
+          source: 'manual' as const,
+          lastUpdated: new Date().toISOString(),
+        };
+
+        const updatedProfile: ProfessionalProfile = {
+          ...existingProfile,
+          ...input,
+          source: 'manual',
+          lastUpdated: new Date().toISOString(),
+        };
+
+        await db.updateUserProfessionalProfile(ctx.user.id, updatedProfile);
+        return {
+          profile: updatedProfile,
+          completeness: calculateProfileCompleteness(updatedProfile),
+        };
+      }),
+
+    // Get full 360 profile summary
+    getFullProfile: protectedProcedure.query(async ({ ctx }) => {
+      const user = await db.getUserById(ctx.user.id);
+      if (!user) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+      }
+
+      const bigFiveProfile = user.bigFiveProfile as BigFiveProfile | null;
+      const professionalProfile = user.professionalProfile as ProfessionalProfile | null;
+
+      return {
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          avatarUrl: user.avatarUrl,
+          bio: user.bio,
+          expertise: user.expertise,
+        },
+        bigFive: bigFiveProfile
+          ? {
+              profile: bigFiveProfile,
+              teamRole: getTeamRole(bigFiveProfile),
+              traitDescriptions: TRAIT_DESCRIPTIONS,
+            }
+          : null,
+        professional: professionalProfile
+          ? {
+              profile: professionalProfile,
+              completeness: calculateProfileCompleteness(professionalProfile),
+            }
+          : null,
+        profileCompleteness: calculateOverallCompleteness(user, bigFiveProfile, professionalProfile),
+      };
+    }),
+  }),
 });
+
+// Helper function to calculate overall profile completeness
+function calculateOverallCompleteness(
+  user: any,
+  bigFive: BigFiveProfile | null,
+  professional: ProfessionalProfile | null
+): number {
+  let score = 0;
+  // Basic info (30%)
+  if (user.name) score += 10;
+  if (user.email) score += 5;
+  if (user.avatarUrl) score += 5;
+  if (user.bio) score += 10;
+  // Big Five (35%)
+  if (bigFive) {
+    score += 25;
+    if (bigFive.confidence >= 80) score += 10;
+  }
+  // Professional (35%)
+  if (professional) {
+    score += Math.round(calculateProfileCompleteness(professional) * 0.35);
+  }
+  return Math.min(100, score);
+}
 
 export type AppRouter = typeof appRouter;
