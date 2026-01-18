@@ -19,6 +19,14 @@ import { invokeLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import { transcribeAudio } from "./_core/voiceTranscription";
 import { analyzeQuick, analyzeWithLLM, FullAnalysisResult } from "./realtimeAnalysis";
+import {
+  generateSmartSummary,
+  filterSignificantBiases,
+  VULGARIZED_BIASES,
+  DEFAULT_THRESHOLDS,
+  CONTEXT_THRESHOLDS,
+  type SmartBiasSummary,
+} from "./smartBiasSystem";
 
 // ==================== COGNITIVE TOKENS SYSTEM ====================
 
@@ -629,7 +637,10 @@ export const appRouter = router({
       }),
 
     analyzeConversation: protectedProcedure
-      .input(z.object({ projectId: z.number() }))
+      .input(z.object({ 
+        projectId: z.number(),
+        contextType: z.enum(["critical_decision", "brainstorming", "new_team", "experienced_team"]).optional(),
+      }))
       .mutation(async ({ input }) => {
         const messagesData = await db.getMessagesByProjectId(input.projectId, 50);
         const decisionsData = await db.getDecisionsByProjectId(input.projectId);
@@ -654,6 +665,14 @@ export const appRouter = router({
 
         const analysis = await detectBiasWithLLM(context);
 
+        // Générer le résumé intelligent des biais (anti-overload)
+        const smartSummary = generateSmartSummary(analysis.biases, {
+          teamSize: teamMembers.length,
+          sessionDuration: 30, // TODO: calculer depuis les timestamps
+          previousAlerts: 0, // TODO: récupérer depuis la session
+          contextType: input.contextType,
+        });
+
         // Store metrics
         await db.createCognitiveMetric({
           projectId: input.projectId,
@@ -668,7 +687,16 @@ export const appRouter = router({
           },
         });
 
-        return analysis;
+        // Retourner l'analyse avec le résumé intelligent
+        return {
+          ...analysis,
+          smartSummary,
+          // Enrichir les biais avec les descriptions vulgarisées
+          vulgarizedBiases: analysis.biases.map(b => ({
+            ...b,
+            vulgarized: VULGARIZED_BIASES[b.type as keyof typeof VULGARIZED_BIASES],
+          })),
+        };
       }),
 
     extractDecisions: protectedProcedure

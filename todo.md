@@ -113,8 +113,37 @@
 - [x] Problème d'authentification OAuth - résolu (fonctionnait déjà)
 
 ## Statistiques Actuelles
-- **Fonctionnalités implémentées** : 53 ✅ (+9 nouvelles)
-- **Fonctionnalités partielles** : 12 🟡
-- **Fonctionnalités à développer** : 30 ❌
-- **Taux de complétion** : ~56% complet, ~13% partiel, ~31% à développer
-- **Tests unitaires** : 53 tests passent ✅
+- **Fonctionnalités implémentées** : 68 ✅ (+24 nouvelles)
+- **Fonctionnalités partielles** : 8 🟡
+- **Fonctionnalités à développer** : 19 ❌
+- **Taux de complétion** : ~72% complet, ~8% partiel, ~20% à développer
+- **Tests unitaires** : 85 tests passent ✅
+
+## Phase 6 : Améliorations en cours
+
+### 6.1 Système de Biais Intelligent (Anti-Overload)
+- [x] Vulgariser les descriptions de biais (langage simple, exemples concrets)
+- [x] Implémenter seuils de sévérité (alerter seulement si biais important)
+- [x] Ajouter système de guidage positif (suggestions constructives)
+- [x] Réduire le bruit des alertes (regrouper, prioriser)
+
+### 6.2 Notifications Temps Réel
+- [x] Implémenter SSE (Server-Sent Events) pour alertes instantanées
+- [x] Créer système de notification non-intrusif (toast, banner, subtle)
+- [x] Ajouter préférences de notification utilisateur (types, priorité, heures calmes)
+
+### 6.3 Templates Cognitifs
+- [x] Créer template Startup (tolérance risque élevée)
+- [x] Créer template Produit Tech (focus qualité)
+- [x] Créer template Consulting (rigueur analytique)
+- [x] Créer template Créatif (divergence valorisée)
+- [x] Créer template R&D (rigueur scientifique)
+- [x] Créer template Opérations (efficacité)
+- [x] Ajuster seuils automatiquement selon template
+- [x] Ajouter suggestion automatique de template
+
+### 6.4 Indexation Vectorielle
+- [x] Implémenter recherche sémantique dans mémoire collective
+- [x] Ajouter reconnaissance de patterns similaires
+- [x] Détection de patterns récurrents (biais, erreurs, décisions)
+- [x] Suggestions basées sur la mémoire collective
